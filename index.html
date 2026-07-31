@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>亲密关系自我倾向自评问卷</title>
+<title>亲密关系自我倾向自评问卷（30题标准版）</title>
 <style>
-html, body, header, main, section, div, h1, h2, h3, p, label, button, input {
+html, body, header, main, section, article, div, h1, h2, h3, p, label, button, input, span, form {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -15,45 +15,33 @@ body {
     background-color: #f8fafc;
     color: #0f172a;
     line-height: 1.5;
-    padding: 16px;
+    padding-bottom: 40px;
 }
-.container {
+.sticky-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid #e2e8f0;
+    padding: 12px 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+}
+.sticky-content {
     max-width: 680px;
     margin: 0 auto;
-    background: #ffffff;
-    border-radius: 16px;
-    padding: 24px;
-    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
 }
-.header {
-    text-align: center;
-    margin-bottom: 24px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid #e2e8f0;
-}
-.header h1 {
-    font-size: 20px;
-    font-weight: 700;
-    color: #1e293b;
-    margin-bottom: 6px;
-}
-.header p {
-    font-size: 13px;
-    color: #64748b;
-}
-.progress-container {
-    margin-top: 16px;
-}
-.progress-text {
+.progress-info {
     display: flex;
     justify-content: space-between;
-    font-size: 12px;
-    color: #64748b;
+    font-size: 13px;
+    font-weight: 600;
+    color: #475569;
     margin-bottom: 6px;
 }
-.progress-bar-wrap {
+.progress-bar-bg {
     width: 100%;
-    height: 6px;
+    height: 8px;
     background: #e2e8f0;
     border-radius: 999px;
     overflow: hidden;
@@ -64,7 +52,48 @@ body {
     background: #4f46e5;
     transition: width 0.3s ease;
 }
-.section-title {
+.main-container {
+    max-width: 680px;
+    margin: 20px auto 0 auto;
+    padding: 0 16px;
+}
+.intro-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+.intro-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.intro-desc {
+    font-size: 13.5px;
+    color: #475569;
+    line-height: 1.6;
+    margin-bottom: 14px;
+}
+.notice-box {
+    background: #f1f5f9;
+    border-left: 4px solid #4f46e5;
+    padding: 12px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    color: #334155;
+    line-height: 1.6;
+}
+.notice-box p {
+    margin-bottom: 4px;
+}
+.notice-box p:last-child {
+    margin-bottom: 0;
+}
+.section-header {
     font-size: 15px;
     font-weight: 600;
     color: #334155;
@@ -118,7 +147,7 @@ body {
     background: #4f46e5;
     color: #ffffff;
     border-color: #4f46e5;
-    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
 }
 .opt-btn.active .opt-sub {
     color: #e0e7ff;
@@ -172,20 +201,21 @@ body {
     background: #4338ca;
 }
 .btn-secondary {
-    background: #f1f5f9;
+    background: #ffffff;
     color: #475569;
     border: 1px solid #cbd5e1;
 }
 .btn-secondary:hover {
-    background: #e2e8f0;
+    background: #f1f5f9;
 }
 .result-card {
     display: none;
     margin-top: 28px;
     padding: 24px;
-    background: #f8fafc;
+    background: #ffffff;
     border: 1px solid #c7d2fe;
     border-radius: 14px;
+    box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.1);
 }
 .result-title {
     font-size: 16px;
@@ -212,25 +242,35 @@ body {
 </head>
 <body>
 
-<div class="container">
-    <div class="header">
-        <h1>亲密关系自我倾向自评问卷</h1>
-        <p>评估在双人互动中的行为模式与自我中心倾向</p>
-        <div class="progress-container">
-            <div class="progress-text">
-                <span>完成进度</span>
-                <span id="progressText">0 / 16</span>
-            </div>
-            <div class="progress-bar-wrap">
-                <div id="progressBar" class="progress-bar-fill"></div>
-            </div>
+<div class="sticky-header">
+    <div class="sticky-content">
+        <div class="progress-info">
+            <span>答题进度</span>
+            <span id="progressText">0 / 30</span>
+        </div>
+        <div class="progress-bar-bg">
+            <div id="progressBar" class="progress-bar-fill"></div>
+        </div>
+    </div>
+</div>
+
+<div class="main-container">
+    <div class="intro-card">
+        <div class="intro-title">亲密关系自我倾向自评问卷（30题标准版）</div>
+        <p class="intro-desc">
+            本问卷基于亲密关系特权感（REQ）与关系自恋维度理论设计，包含 30 项具体行为指标。旨在帮助受测者系统评估在双人相处中的自我中心倾向、共情质量、冲突防御模式与情感控制倾向。
+        </p>
+        <div class="notice-box">
+            <p><b>1. 隐私与数据安全：</b>本问卷为纯客户端页面渲染，不设后端数据库，绝不收集、上传或存储任何个人数据与答案记录。</p>
+            <p><b>2. 填答建议：</b>请根据您在近半年亲密关系中的真实心理与行为体验作答，凭第一直觉选择最符合的选项（预计用时 3-5 分钟）。</p>
+            <p><b>3. 评估说明：</b>测评结果仅供自我觉察与对等沟通参考，不作为任何心理临床诊断依据。</p>
         </div>
     </div>
 
     <form id="quizForm">
         <div id="questions"></div>
         <div class="actions">
-            <button type="button" class="btn btn-secondary" onclick="resetForm()">重置</button>
+            <button type="button" class="btn btn-secondary" onclick="resetForm()">重置问卷</button>
             <button type="button" class="btn btn-primary" onclick="calcResult()">提交评估</button>
         </div>
     </form>
@@ -250,34 +290,53 @@ const data = [
             "在与伴侣发生意见分歧时，我通常确信自己的观点才是最合理的。",
             "我希望伴侣在规划日常行程时，能够优先考虑我的时间和需求。",
             "在决定两人的共同事务时，我倾向于由自己掌握最终的决定权。",
-            "我认为自己在亲密关系中付出的价值和重要性高于伴侣。"
+            "我认为自己在亲密关系中付出的价值和重要性高于伴侣。",
+            "我觉得伴侣应当顺从我的生活习惯，哪怕这需要对方做出很大让步。",
+            "在关系中，如果伴侣制定的规则限制了我的自由，我会表现出强烈的排斥。"
         ]
     },
     {
-        title: "二、 共情表达与需求平衡",
+        title: "二、 情感共情与需求忽视",
         items: [
             "当伴侣向我倾诉负面情绪时，我有时会感到难以专注或产生疲惫感。",
             "在双方需求发生冲突时，我会优先保障自己的利益不受损害。",
             "我希望伴侣能够及时回应我的联系，但我有时无法以相同的即时性回应对方。",
-            "当伴侣的言行未能达到我的预期时，我的情感投入会明显降低。"
+            "当伴侣的言行未能达到我的预期时，我的情感投入会明显降低。",
+            "我很难敏锐地察觉到伴侣情绪背后的脆弱与求助信号。",
+            "在照顾伴侣情绪与满足自己当下兴致之间，我更倾向于选择满足后者。"
         ]
     },
     {
-        title: "三、 冲突应对与防御心理",
+        title: "三、 冲突防御与过错归因",
         items: [
             "当伴侣对我提出批评或指出缺点时，我的第一反应通常是感到被冒犯并进行辩解。",
-            "在发生冲突或争执后，我极少会主动承认错误或向对方道歉。",
+            "在发生冲突或争吵后，我极少会主动承认错误或向对方道歉。",
             "我倾向于将关系中出现的矛盾归因于伴侣的性格或沟通方式。",
-            "当伴侣令我不满时，我有时会通过减少交流或拉开距离来表达不快。"
+            "当矛盾发生时，我常常会举出过往的实例来证明对方的不当之处。",
+            "我很难接受在争执中向伴侣展现出自己的软弱或做出妥协。",
+            "当面对伴侣的不满时，我习惯用“是你太敏感”或“你多想了”来回应。"
         ]
     },
     {
-        title: "四、 认可需求与关系期待",
+        title: "四、 极化期待与优越感知",
         items: [
             "我需要伴侣频繁表达对我的认可、赞美与情绪支持。",
             "我很看重伴侣在社交场合或亲友面前的表现能否提升我的形象。",
             "一旦伴侣展现出我不赞同的缺点，我对这段关系的满意度会显著下降。",
-            "当伴侣的立场与我不一致时，我会尝试说服对方接受我的观点。"
+            "当伴侣的立场与我不一致时，我会尝试说服对方接受我的观点。",
+            "如果伴侣对我表达的赞赏或崇拜减少，我会感到关系质量大幅降低。",
+            "我希望在伴侣眼中，自己始终是一个近乎完美或值得被崇拜的对象。"
+        ]
+    },
+    {
+        title: "五、 情感操控与冷漠惩罚",
+        items: [
+            "当伴侣令我不满时，我有时会通过减少交流或拉开距离来表达不快。",
+            "当伴侣未满足我的预期时，我会通过撤回关心来让对方意识到错误。",
+            "我有时会通过表达失望来让伴侣产生内疚感，从而配合我的意愿。",
+            "我倾向于根据伴侣是否顺从我的意愿，来决定给予对方多少温情与亲密。",
+            "当伴侣提出我不喜欢的议题时，我会通过转移话题或冷淡回应来终止讨论。",
+            "在冲突后，我更习惯等待伴侣主动来安抚我，而不是主动去打破僵局。"
         ]
     }
 ];
@@ -289,7 +348,7 @@ function render() {
     let html = "";
     let qIndex = 1;
     data.forEach(group => {
-        html += `<div class="section-title">${group.title}</div>`;
+        html += `<div class="section-header">${group.title}</div>`;
         group.items.forEach(item => {
             html += `<div class="q-card" id="qcard-${qIndex}">
                 <div class="q-title">${qIndex}. ${item}</div>
@@ -327,14 +386,14 @@ function selectValue(qNum, val) {
 
 function updateProgress() {
     const answeredCount = Object.keys(answers).length;
-    document.getElementById("progressText").innerText = `${answeredCount} / 16`;
-    const pct = (answeredCount / 16) * 100;
+    document.getElementById("progressText").innerText = `${answeredCount} / 30`;
+    const pct = answeredCount / 0.3;
     document.getElementById("progressBar").style.width = `${pct}%`;
 }
 
 function calcResult() {
     let firstUnanswered = null;
-    for (let i = 1; i <= 16; i++) {
+    for (let i = 1; i <= 30; i++) {
         if (!answers[i]) {
             const card = document.getElementById(`qcard-${i}`);
             if (card) card.classList.add("unanswered-highlight");
@@ -348,7 +407,7 @@ function calcResult() {
     }
 
     let total = 0;
-    for (let i = 1; i <= 16; i++) {
+    for (let i = 1; i <= 30; i++) {
         total += answers[i];
     }
 
@@ -359,12 +418,12 @@ function calcResult() {
     resDiv.style.display = "block";
     scoreText.innerText = "总分：" + total + " 分";
 
-    if (total <= 32) {
-        analysisText.innerText = "结果判定：相互型特质（16-32分）。你在亲密关系中展现出较好的对等沟通意识，能够有效兼顾自身与伴侣的需求。";
-    } else if (total <= 48) {
-        analysisText.innerText = "结果判定：中度自我中心（33-48分）。你在特定情境下存在较强的自我保护意识或控制倾向，容易引发互动中的摩擦，建议多留意双方边界。";
+    if (total <= 60) {
+        analysisText.innerText = "结果判定：相互平等型（30-60分）。你在亲密关系中展现出良好的对等沟通意识与共情意愿，能够有效兼顾自身与伴侣的需求，具备较健康的双人关系边界。";
+    } else if (total <= 95) {
+        analysisText.innerText = "结果判定：中度自我中心型（61-95分）。你在特定压力或冲突情境下存在较强的自我保护与控制倾向，偶尔会出现防御性辩解或冷淡回应，建议多关注对方的情感诉求。";
     } else {
-        analysisText.innerText = "结果判定：高度关系自恋倾向（49-80分）。你在互动中展现出显著的特权感、高防御性及共情局限，自我中心倾向较强。";
+        analysisText.innerText = "结果判定：高度关系自恋倾向（96-150分）。你在互动中展现出显著的特权感、高防御性及共情局限，自我中心与情感控制倾向较为突出，容易给伴侣造成持续的情绪消耗。";
     }
 
     resDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
