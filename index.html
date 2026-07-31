@@ -5,118 +5,240 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>亲密关系自我倾向自评问卷</title>
 <style>
-html, body, div, h1, h2, h3, p, label, button, input, section {
+html, body, header, main, section, div, h1, h2, h3, p, label, button, input {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    background-color: #f5f7fa;
-    color: #333;
-    padding: 20px;
-    line-height: 1.6;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #f8fafc;
+    color: #0f172a;
+    line-height: 1.5;
+    padding: 16px;
 }
 .container {
     max-width: 680px;
     margin: 0 auto;
     background: #ffffff;
-    border-radius: 12px;
+    border-radius: 16px;
     padding: 24px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.08);
 }
-h1 {
+.header {
+    text-align: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #e2e8f0;
+}
+.header h1 {
     font-size: 20px;
-    margin-bottom: 8px;
-    text-align: center;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 6px;
 }
-.desc {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 20px;
-    text-align: center;
+.header p {
+    font-size: 13px;
+    color: #64748b;
 }
-.dimension-title {
-    font-size: 16px;
-    font-weight: bold;
-    color: #2c3e50;
-    margin: 24px 0 12px 0;
-    padding-bottom: 6px;
-    border-bottom: 2px solid #eef2f7;
+.progress-container {
+    margin-top: 16px;
 }
-.q-block {
-    margin-bottom: 16px;
-}
-.q-title {
-    font-size: 15px;
-    margin-bottom: 8px;
-}
-.options {
+.progress-text {
     display: flex;
     justify-content: space-between;
-    gap: 4px;
-}
-.opt-label {
-    flex: 1;
-    text-align: center;
-    background: #f8f9fa;
-    border: 1px solid #e9ecef;
-    border-radius: 6px;
-    padding: 8px 4px;
     font-size: 12px;
-    cursor: pointer;
+    color: #64748b;
+    margin-bottom: 6px;
 }
-.opt-label input {
-    display: none;
-}
-.opt-label.active {
-    background: #3b82f6;
-    color: #fff;
-    border-color: #3b82f6;
-}
-button.submit-btn {
+.progress-bar-wrap {
     width: 100%;
-    padding: 12px;
-    background: #3b82f6;
-    color: #fff;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 24px;
+    height: 6px;
+    background: #e2e8f0;
+    border-radius: 999px;
+    overflow: hidden;
 }
-.result-box {
-    display: none;
-    margin-top: 24px;
-    padding: 20px;
-    background: #f0f7ff;
+.progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: #4f46e5;
+    transition: width 0.3s ease;
+}
+.section-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #334155;
+    background: #f1f5f9;
+    padding: 10px 14px;
     border-radius: 8px;
-    border: 1px solid #bae0ff;
+    margin: 24px 0 16px 0;
+    border-left: 4px solid #4f46e5;
+}
+.q-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.q-card.unanswered-highlight {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.1);
+}
+.q-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1e293b;
+    margin-bottom: 12px;
+}
+.options-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+}
+.opt-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 4px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: #ffffff;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+.opt-btn:hover {
+    background: #f8fafc;
+    border-color: #94a3b8;
+}
+.opt-btn.active {
+    background: #4f46e5;
+    color: #ffffff;
+    border-color: #4f46e5;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+.opt-btn.active .opt-sub {
+    color: #e0e7ff;
+}
+.opt-val {
+    font-size: 13px;
+    font-weight: 600;
+}
+.opt-sub {
+    font-size: 11px;
+    color: #64748b;
+    margin-top: 2px;
+    text-align: center;
+}
+@media (max-width: 600px) {
+    .options-grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    .opt-btn {
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 12px 16px;
+    }
+    .opt-sub {
+        margin-top: 0;
+        font-size: 13px;
+    }
+}
+.actions {
+    margin-top: 32px;
+    display: flex;
+    gap: 12px;
+}
+.btn {
+    flex: 1;
+    padding: 14px 20px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    text-align: center;
+}
+.btn-primary {
+    background: #4f46e5;
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(79, 70, 229, 0.3);
+}
+.btn-primary:hover {
+    background: #4338ca;
+}
+.btn-secondary {
+    background: #f1f5f9;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+}
+.btn-secondary:hover {
+    background: #e2e8f0;
+}
+.result-card {
+    display: none;
+    margin-top: 28px;
+    padding: 24px;
+    background: #f8fafc;
+    border: 1px solid #c7d2fe;
+    border-radius: 14px;
+}
+.result-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1e1b4b;
+    margin-bottom: 8px;
 }
 .score-badge {
-    font-size: 22px;
-    font-weight: bold;
-    color: #1890ff;
-    margin-bottom: 8px;
+    display: inline-block;
+    background: #4f46e5;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 4px 14px;
+    border-radius: 999px;
+    margin-bottom: 12px;
+}
+.result-desc {
+    font-size: 14px;
+    color: #334155;
+    line-height: 1.6;
 }
 </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>亲密关系自我倾向自评问卷</h1>
-    <p class="desc">请根据你在亲密关系中的真实想法与行为评分（1-5分）</p>
+    <div class="header">
+        <h1>亲密关系自我倾向自评问卷</h1>
+        <p>评估在双人互动中的行为模式与自我中心倾向</p>
+        <div class="progress-container">
+            <div class="progress-text">
+                <span>完成进度</span>
+                <span id="progressText">0 / 16</span>
+            </div>
+            <div class="progress-bar-wrap">
+                <div id="progressBar" class="progress-bar-fill"></div>
+            </div>
+        </div>
+    </div>
 
     <form id="quizForm">
         <div id="questions"></div>
-        <button type="button" class="submit-btn" onclick="calcResult()">提交评估</button>
+        <div class="actions">
+            <button type="button" class="btn btn-secondary" onclick="resetForm()">重置</button>
+            <button type="button" class="btn btn-primary" onclick="calcResult()">提交评估</button>
+        </div>
     </form>
 
-    <div id="result" class="result-box">
-        <h3>评估结果</h3>
+    <div id="result" class="result-card">
+        <div class="result-title">评估结果解读</div>
         <div id="scoreText" class="score-badge"></div>
-        <p id="analysisText"></p>
+        <p id="analysisText" class="result-desc"></p>
     </div>
 </div>
 
@@ -161,21 +283,23 @@ const data = [
 ];
 
 const opts = ["完全不符合", "比较不符合", "有时符合", "比较符合", "完全符合"];
+const answers = {};
 
 function render() {
     let html = "";
     let qIndex = 1;
     data.forEach(group => {
-        html += `<div class="dimension-title">${group.title}</div>`;
+        html += `<div class="section-title">${group.title}</div>`;
         group.items.forEach(item => {
-            html += `<div class="q-block">
+            html += `<div class="q-card" id="qcard-${qIndex}">
                 <div class="q-title">${qIndex}. ${item}</div>
-                <div class="options">`;
+                <div class="options-grid">`;
             opts.forEach((optText, v) => {
                 const val = v + 1;
-                html += `<label class="opt-label" onclick="selectOpt(this)">
-                    <input type="radio" name="q${qIndex}" value="${val}">${val}分<br>${optText}
-                </label>`;
+                html += `<div class="opt-btn" id="opt-${qIndex}-${val}" onclick="selectValue(${qIndex}, ${val})">
+                    <span class="opt-val">${val}分</span>
+                    <span class="opt-sub">${optText}</span>
+                </div>`;
             });
             html += `</div></div>`;
             qIndex++;
@@ -184,27 +308,48 @@ function render() {
     document.getElementById("questions").innerHTML = html;
 }
 
-function selectOpt(el) {
-    const parent = el.parentElement;
-    const labels = parent.querySelectorAll(".opt-label");
-    labels.forEach(l => l.classList.remove("active"));
-    el.classList.add("active");
+function selectValue(qNum, val) {
+    answers[qNum] = val;
+    
+    const card = document.getElementById(`qcard-${qNum}`);
+    card.classList.remove("unanswered-highlight");
+    
+    for (let i = 1; i <= 5; i++) {
+        const btn = document.getElementById(`opt-${qNum}-${i}`);
+        if (btn) btn.classList.remove("active");
+    }
+    
+    const selectedBtn = document.getElementById(`opt-${qNum}-${val}`);
+    if (selectedBtn) selectedBtn.classList.add("active");
+    
+    updateProgress();
+}
+
+function updateProgress() {
+    const answeredCount = Object.keys(answers).length;
+    document.getElementById("progressText").innerText = `${answeredCount} / 16`;
+    const pct = (answeredCount / 16) * 100;
+    document.getElementById("progressBar").style.width = `${pct}%`;
 }
 
 function calcResult() {
-    let total = 0;
-    let answered = 0;
+    let firstUnanswered = null;
     for (let i = 1; i <= 16; i++) {
-        const selected = document.querySelector(`input[name="q${i}"]:checked`);
-        if (selected) {
-            total += parseInt(selected.value, 10);
-            answered++;
+        if (!answers[i]) {
+            const card = document.getElementById(`qcard-${i}`);
+            if (card) card.classList.add("unanswered-highlight");
+            if (!firstUnanswered) firstUnanswered = card;
         }
     }
 
-    if (answered < 16) {
-        alert("请回答完所有题目后再提交（已完成 " + answered + "/16）");
+    if (firstUnanswered) {
+        firstUnanswered.scrollIntoView({ behavior: 'smooth', block: 'center' });
         return;
+    }
+
+    let total = 0;
+    for (let i = 1; i <= 16; i++) {
+        total += answers[i];
     }
 
     const resDiv = document.getElementById("result");
@@ -215,12 +360,25 @@ function calcResult() {
     scoreText.innerText = "总分：" + total + " 分";
 
     if (total <= 32) {
-        analysisText.innerText = "结果判定：相互型特质。你在亲密关系中展现出较好的平等沟通意识，能够有效兼顾自身与伴侣的需求。";
+        analysisText.innerText = "结果判定：相互型特质（16-32分）。你在亲密关系中展现出较好的对等沟通意识，能够有效兼顾自身与伴侣的需求。";
     } else if (total <= 48) {
-        analysisText.innerText = "结果判定：中度自我中心。你在特定情境下存在较强的自我保护意识或控制倾向，容易引发互动中的摩擦，建议多留意双方边界。";
+        analysisText.innerText = "结果判定：中度自我中心（33-48分）。你在特定情境下存在较强的自我保护意识或控制倾向，容易引发互动中的摩擦，建议多留意双方边界。";
     } else {
-        analysisText.innerText = "结果判定：高度关系自恋倾向。你在互动中展现出显著的特权感、高防御性及共情局限，自我中心倾向较强。";
+        analysisText.innerText = "结果判定：高度关系自恋倾向（49-80分）。你在互动中展现出显著的特权感、高防御性及共情局限，自我中心倾向较强。";
     }
+
+    resDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function resetForm() {
+    for (let key in answers) {
+        delete answers[key];
+    }
+    document.querySelectorAll(".opt-btn").forEach(btn => btn.classList.remove("active"));
+    document.querySelectorAll(".q-card").forEach(card => card.classList.remove("unanswered-highlight"));
+    document.getElementById("result").style.display = "none";
+    updateProgress();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 render();
