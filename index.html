@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>亲密关系自我倾向自评问卷</title>
+<style>
+html, body, div, h1, h2, h3, p, label, button, input, section {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f5f7fa;
+    color: #333;
+    padding: 20px;
+    line-height: 1.6;
+}
+.container {
+    max-width: 680px;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+h1 {
+    font-size: 20px;
+    margin-bottom: 8px;
+    text-align: center;
+}
+.desc {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.dimension-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin: 24px 0 12px 0;
+    padding-bottom: 6px;
+    border-bottom: 2px solid #eef2f7;
+}
+.q-block {
+    margin-bottom: 16px;
+}
+.q-title {
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+.options {
+    display: flex;
+    justify-content: space-between;
+    gap: 4px;
+}
+.opt-label {
+    flex: 1;
+    text-align: center;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 6px;
+    padding: 8px 4px;
+    font-size: 12px;
+    cursor: pointer;
+}
+.opt-label input {
+    display: none;
+}
+.opt-label.active {
+    background: #3b82f6;
+    color: #fff;
+    border-color: #3b82f6;
+}
+button.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background: #3b82f6;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 24px;
+}
+.result-box {
+    display: none;
+    margin-top: 24px;
+    padding: 20px;
+    background: #f0f7ff;
+    border-radius: 8px;
+    border: 1px solid #bae0ff;
+}
+.score-badge {
+    font-size: 22px;
+    font-weight: bold;
+    color: #1890ff;
+    margin-bottom: 8px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h1>亲密关系自我倾向自评问卷</h1>
+    <p class="desc">请根据你在亲密关系中的真实想法与行为评分（1-5分）</p>
+
+    <form id="quizForm">
+        <div id="questions"></div>
+        <button type="button" class="submit-btn" onclick="calcResult()">提交评估</button>
+    </form>
+
+    <div id="result" class="result-box">
+        <h3>评估结果</h3>
+        <div id="scoreText" class="score-badge"></div>
+        <p id="analysisText"></p>
+    </div>
+</div>
+
+<script>
+const data = [
+    {
+        title: "一、 关系特权感与主导倾向",
+        items: [
+            "在与伴侣发生意见分歧时，我通常确信自己的观点才是最合理的。",
+            "我希望伴侣在规划日常行程时，能够优先考虑我的时间和需求。",
+            "在决定两人的共同事务时，我倾向于由自己掌握最终的决定权。",
+            "我认为自己在亲密关系中付出的价值和重要性高于伴侣。"
+        ]
+    },
+    {
+        title: "二、 共情表达与需求平衡",
+        items: [
+            "当伴侣向我倾诉负面情绪时，我有时会感到难以专注或产生疲惫感。",
+            "在双方需求发生冲突时，我会优先保障自己的利益不受损害。",
+            "我希望伴侣能够及时回应我的联系，但我有时无法以相同的即时性回应对方。",
+            "当伴侣的言行未能达到我的预期时，我的情感投入会明显降低。"
+        ]
+    },
+    {
+        title: "三、 冲突应对与防御心理",
+        items: [
+            "当伴侣对我提出批评或指出缺点时，我的第一反应通常是感到被冒犯并进行辩解。",
+            "在发生冲突或争执后，我极少会主动承认错误或向对方道歉。",
+            "我倾向于将关系中出现的矛盾归因于伴侣的性格或沟通方式。",
+            "当伴侣令我不满时，我有时会通过减少交流或拉开距离来表达不快。"
+        ]
+    },
+    {
+        title: "四、 认可需求与关系期待",
+        items: [
+            "我需要伴侣频繁表达对我的认可、赞美与情绪支持。",
+            "我很看重伴侣在社交场合或亲友面前的表现能否提升我的形象。",
+            "一旦伴侣展现出我不赞同的缺点，我对这段关系的满意度会显著下降。",
+            "当伴侣的立场与我不一致时，我会尝试说服对方接受我的观点。"
+        ]
+    }
+];
+
+const opts = ["完全不符合", "比较不符合", "有时符合", "比较符合", "完全符合"];
+
+function render() {
+    let html = "";
+    let qIndex = 1;
+    data.forEach(group => {
+        html += `<div class="dimension-title">${group.title}</div>`;
+        group.items.forEach(item => {
+            html += `<div class="q-block">
+                <div class="q-title">${qIndex}. ${item}</div>
+                <div class="options">`;
+            opts.forEach((optText, v) => {
+                const val = v + 1;
+                html += `<label class="opt-label" onclick="selectOpt(this)">
+                    <input type="radio" name="q${qIndex}" value="${val}">${val}分<br>${optText}
+                </label>`;
+            });
+            html += `</div></div>`;
+            qIndex++;
+        });
+    });
+    document.getElementById("questions").innerHTML = html;
+}
+
+function selectOpt(el) {
+    const parent = el.parentElement;
+    const labels = parent.querySelectorAll(".opt-label");
+    labels.forEach(l => l.classList.remove("active"));
+    el.classList.add("active");
+}
+
+function calcResult() {
+    let total = 0;
+    let answered = 0;
+    for (let i = 1; i <= 16; i++) {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        if (selected) {
+            total += parseInt(selected.value, 10);
+            answered++;
+        }
+    }
+
+    if (answered < 16) {
+        alert("请回答完所有题目后再提交（已完成 " + answered + "/16）");
+        return;
+    }
+
+    const resDiv = document.getElementById("result");
+    const scoreText = document.getElementById("scoreText");
+    const analysisText = document.getElementById("analysisText");
+
+    resDiv.style.display = "block";
+    scoreText.innerText = "总分：" + total + " 分";
+
+    if (total <= 32) {
+        analysisText.innerText = "结果判定：相互型特质。你在亲密关系中展现出较好的平等沟通意识，能够有效兼顾自身与伴侣的需求。";
+    } else if (total <= 48) {
+        analysisText.innerText = "结果判定：中度自我中心。你在特定情境下存在较强的自我保护意识或控制倾向，容易引发互动中的摩擦，建议多留意双方边界。";
+    } else {
+        analysisText.innerText = "结果判定：高度关系自恋倾向。你在互动中展现出显著的特权感、高防御性及共情局限，自我中心倾向较强。";
+    }
+}
+
+render();
+</script>
+</body>
+</html>
